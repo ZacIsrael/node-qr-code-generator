@@ -25,8 +25,10 @@ inquirer
   .then((answers) => {
     // answers is the array that contains the link(s) that the user submitted
     console.log('answers = ', answers);
+    let url = answers.URL;
     // 2. Use the qr-image npm package to turn the user entered URL into a QR code image.
-    let qrImage = qr.image(answers.URL, {type: 'png'});
+    let qrImage = qr.image(url, {type: 'png'});
+    qrImage.pipe(fs.createWriteStream(`qr_img.png`));
 
     // 3. Create a txt file to save the user input using the native fs node module.
     fs.writeFile('url.txt', answers.URL, (err) => {
